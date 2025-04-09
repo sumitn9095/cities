@@ -1,0 +1,112 @@
+/*
+ * Application global variables.
+ */
+// Set Font Awesome font path
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+
+// ---------------------------------------------------------------------------
+// Bootstrap variables
+//
+// Override Bootstrap variables here to suite your theme.
+// Copy variables you want to customize from node_modules/bootstrap/scss/_variables.scss
+
+//
+// Color system
+//
+
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #868e96;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$blue: #0073dd;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+
+$theme-colors: (primary: $blue,
+  secondary: $gray-600,
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: $gray-100,
+  dark: $gray-800,
+);
+
+$text-color: #333333;
+
+// -- Marine Color
+$primary-c: #1478c3;
+$m-primary-c: $primary-c;
+$marine-primary-color: $primary-c;
+//
+$secondary-c: #dc3545;
+//
+$marine-very-lite: #eff7fb;
+$marine-table-header-bg: #e1f0f6;
+
+// -- Fire Color
+$fire-primary-color: #c64141;
+$f-primary-c: $fire-primary-color;
+//
+$fire-secondary-color: #ea8e51;
+//
+$fire-danger-button: $fire-primary-color;
+$fire-primary-button: #f26060;
+$fire-very-lite: #fff1f1;
+$fire-table-header-bg: #f6e4e4;
+$fire-table-shadows: #d4cdcd;
+$fire-table-pagination-selected: #ffdede;
+$fire-dropdown-bg: #fff4f4;
+$fire-text-color: $text-color;
+$fire-link-c: #0073dd;
+
+$reset-c: #e9ecef;
+$disabled: #c5c5c5;
+$disabled-lite: #f4f4f4;
+
+
+$life: #D2B48C;
+$health: #FFC181;
+$motor: #F5D24E;
+$others: #d978ed;
+
+$total: #00E0FF;
+$escalated: #FFFF00;
+$pendingC: #D60000;
+
+$closed: #7ad658;
+$registered: #04DCFA;
+$open: #1C64F2;
+
+$c1: #ffffd6;
+$c2: #a2f2b3;
+$c3: #a7a4f2;
+$c4: #e08af2;
+$c5: #f279a5;
+
+//------ Action Status -----
+$approved : #28a745;
+$rejected : #ff0000;
+$cancelled : #ff9335;
+$expired : #99e1aa;
+$pending : #f9ce69;
+
+// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
+// in components.
+@import "bootstrap/scss/_functions";
+@import "bootstrap/scss/_variables";

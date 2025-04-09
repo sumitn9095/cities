@@ -1,0 +1,243 @@
+@import "./theme-variables";
+
+@keyframes rotate1 {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.app-Marine {
+  .text-color {
+    color: $text-color !important;
+  }
+  .bg-very-lite {
+    background-color: $marine-very-lite !important;
+  }
+  .dashboard-card {
+    &.clickable {
+      &:hover {
+        background-color: $marine-table-header-bg !important;
+      }
+      &.active {
+        background-color: $marine-table-header-bg !important;
+      }
+    }
+  }
+
+  .navbar-menu-main {
+    background-color: $primary-c !important;
+    .nav-link {
+      &.active {
+        background-color: #2d8fd8;
+      }
+    }
+  }
+  .mat-dialog-container {
+    .dialog {
+      border-color: $marine-primary-color;
+      border-bottom: $marine-primary-color 1px solid;
+      mat-icon {
+        color: $marine-primary-color;
+      }
+    }
+    .dialog-close-btn {
+      color: $marine-primary-color;
+    }
+  }
+  .wizard {
+    .wizard-step.prev {
+      // &:after {
+      //   border-color: $marine-primary-color;
+      // }
+      .wizard-step-child {
+        border-color: $marine-primary-color;
+        background-color: $marine-very-lite;
+      }
+      .body {
+        background-color: $marine-very-lite;
+      }
+    }
+  }
+}
+
+.app-Fire {
+  .text-color {
+    color: $text-color !important;
+  }
+  .cl {
+    color: $fire-primary-color !important;
+  }
+  .bg-very-lite {
+    background-color: $fire-very-lite !important;
+    color: $text-color;
+  }
+  .pageTitle,
+  .pageTitle span,
+  header .logo span,
+  .dashboard-card h4,
+  .ngx-file-drop__content,
+  .card .card-body h3 {
+    color: $fire-text-color !important;
+  }
+  .dashboard-card {
+    &.clickable {
+      &:hover {
+        background-color: $fire-table-pagination-selected !important;
+      }
+      &.active {
+        background-color: $fire-table-pagination-selected !important;
+      }
+    }
+  }
+  .form-label {
+    color: #666666 !important;
+  }
+  .navbar-menu-main {
+    background-color: $fire-primary-color !important;
+    .nav-link {
+      &.active {
+        background: $fire-primary-button !important;
+      }
+    }
+  }
+
+  .navbar-nav {
+    .dropdown-menu {
+      .dropdown-item {
+        &:hover {
+          background-color: $fire-very-lite !important;
+        }
+      }
+    }
+  }
+  // .container {
+  //   a {
+  //     color: $fire-link-c !important;
+  //   }
+  // }
+  .mat-dialog-container {
+    .dialog {
+      border-color: $fire-primary-color;
+      border-bottom: $fire-primary-color 1px solid;
+      mat-icon {
+        color: $fire-primary-color;
+      }
+    }
+    .dialog-close-btn {
+      color: $fire-primary-color;
+    }
+  }
+  .form-check-input:checked,
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked {
+    background-color: $fire-primary-color !important;
+    border-color: $fire-primary-color !important;
+  }
+  .dashboard-card {
+    background: $fire-very-lite !important;
+  }
+  // .category .body {
+  //   background: $fire-very-lite !important;
+  //   .category .body {
+  //     background: $fire-table-header-bg !important;
+  //   }
+  // }
+  .table thead tr {
+    background-color: $fire-table-header-bg !important;
+  }
+  .paginate_button.current {
+    background-color: $fire-table-pagination-selected !important;
+  }
+  .boxShadow {
+    box-shadow: 1px 1px 10px $fire-table-shadows !important;
+  }
+  .form-control,
+  .form-select {
+    box-shadow: 1px 1px 3px $fire-table-shadows !important;
+    background-color: $fire-dropdown-bg !important;
+  }
+  .btn.btn-primary,
+  .upload-btn {
+    border-color: $fire-primary-button !important;
+    background-color: $fire-primary-button !important;
+  }
+  .btn.btn-danger {
+    border-color: $fire-danger-button !important;
+    background-color: $fire-danger-button !important;
+  }
+
+  .table .tblActionBtn {
+    color: $fire-primary-color !important;
+    &.btn {
+      background-color: $fire-very-lite !important;
+    }
+    i {
+      color: $fire-primary-color !important;
+    }
+  }
+  .ngx-file-drop__drop-zone {
+    border-color: $fire-primary-color !important;
+  }
+
+  //-------------------------------------
+  .wizard {
+    .body {
+      background-color: $fire-very-lite;
+    }
+    .wizard-step.prev {
+      // :after {
+      //   border-color: $fire-primary-color;
+      // }
+      .wizard-step-child {
+        border-color: $fire-primary-color;
+        background-color: $fire-very-lite;
+      }
+      .body {
+        background-color: $fire-very-lite;
+      }
+    }
+  }
+}
+
+.reset {
+  background-color: $reset-c;
+  border-color: $reset-c;
+  color: #515151;
+}
+
+@mixin setTheme($clr) {
+  .mat-flat-button,
+  .mat-raised-button,
+  .mat-fab,
+  .mat-mini-fab {
+    &.mat-primary {
+      background-color: #{$clr}-primary-c !important;
+      color: white !important;
+    }
+    //   &.mat-accent {
+    //     background-color: $secondary-c !important;
+    //     color: white !important;
+    //   }
+    //   &.mat-button-disabled {
+    //     opacity: 0.65 !important;
+    //   }
+    // }
+
+    // .mat-checkbox-checked {
+    //   &.mat-primary {
+    //     .mat-checkbox-background {
+    //       background-color: $primary-c !important;
+    //     }
+    //   }
+    //   &.mat-accent {
+    //     .mat-checkbox-background {
+    //       background-color: $secondary-c !important;
+    //     }
+    //   }
+  }
+}
+
+@include setTheme(m);
