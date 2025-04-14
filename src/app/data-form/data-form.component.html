@@ -1,0 +1,28 @@
+<form [formGroup]="dataForm" (ngSubmit)="dataFormProcess()">
+  <mat-form-field appearance="fill">
+    <mat-label>Wheat</mat-label>
+    <input matInput placeholder="wheat" formControlName="wheat">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Rice</mat-label>
+    <input matInput placeholder="rice" formControlName="rice">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Maize</mat-label>
+    <input matInput placeholder="maize" formControlName="maize">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Millets</mat-label>
+    <input matInput placeholder="Millets" formControlName="millets">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Pulses</mat-label>
+    <input matInput placeholder="Pulses" formControlName="pulses">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+  <button type="submit">Save Crops</button>
+</form>

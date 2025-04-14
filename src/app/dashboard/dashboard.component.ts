@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ElementRef, Injector, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { MapComponent } from '../map/map.component';
 import { ActivatedRoute, Params } from '@angular/router';
+import { DataFormComponent } from '../data-form/data-form.component';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,12 +10,15 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  dataFormCompRef!: ComponentRef<any>
   stateMapId: string = '';
   areaNameSelected: string = '';
   @ViewChild('map') 'map': MapComponent;
   mapType: any;
   private indiaMap: string = '../../../assets/map/India.topo.json';
-  constructor(private _ar: ActivatedRoute) { }
+  constructor(private _ar: ActivatedRoute, private _ds: DataService) { }
+  @ViewChild('dataFormContainer', { read: ViewContainerRef }) dataFormContainer!: ViewContainerRef
+  ///@ViewChild('dataFormTempRef', { read: TemplateRef }) dataFormTempRef!:TemplateRef<ElementRef>
   ngOnInit(): void {
     this.mapType = {
       type: true,
@@ -42,5 +47,25 @@ export class DashboardComponent implements OnInit {
         this.mapType.type = true;
       }
     });
+  }
+
+  citySelectedEvent($event: any) {
+    console.log("$event", $event)
+    this.dataFormCompRef = this.dataFormContainer.createComponent(DataFormComponent, {
+      injector: Injector.create({
+        providers: [
+          { provide: 'cropData', useValue: { state: $event.state, city: $event.city } }
+        ]
+      })
+    })
+  }
+
+
+  getCropsData() {
+    this._ds.getCropsData().subscribe({
+      next: (w: any) => {
+        console.log("getCropsData", w);
+      }
+    })
   }
 }

@@ -1,13 +1,12 @@
-<div id="legend_wrap">
-  <!-- <div id="map_legend"></div> -->
+<!-- <div id="legend_wrap">
   <div id="map_legend">
     <span class="legend-item-value">Low</span>
-    <!-- <span class="legend-item-value">25%</span> -->
+   
     <span class="legend-item-value">Medium</span>
-    <!-- <span class="legend-item-value">75%</span>  -->
+    
     <span class="legend-item-value">High</span>
   </div>
-</div>
+</div> -->
 
 
 <!-- <div id="map_legend_list_wrap" class="hide-legend-list">
@@ -30,6 +29,18 @@
   <!-- <div *ngIf="noDataFlag" class="map_no_content"></div> -->
 
   <svg id="map_svg" width="100%" height="100%" stroke-linejoin="round" stroke-linecap="round"></svg>
-  <div id="tips" alt="lob" title="lob" width="10%" height="5%" stroke-linejoin="round" stroke-linecap="round">
+  <div id="map_overlay"></div>
+  <!-- <div id="tips" alt="lob" title="lob" width="10%" height="5%" stroke-linejoin="round" stroke-linecap="round"></div> -->
+  <div id="tips">
+    <ng-container [ngTemplateOutlet]="regionPopover" [ngTemplateOutletContext]="{data:this.mapDetails}"></ng-container>
   </div>
+
 </div>
+
+
+
+<ng-template #regionPopover let-data="data">
+  <div class="title-row d-flex justify-between">
+    <div class="title">{{data}}</div>
+  </div>
+</ng-template>

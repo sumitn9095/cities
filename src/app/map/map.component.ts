@@ -1,17 +1,19 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as d3 from 'd3';
 import * as scale from 'd3-scale';
 import * as topojson from 'topojson-client';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GeometryCollection } from 'topojson-specification';
 import { TopographyService } from 'src/app/topography.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
   projection: any;
   topoFeatureStates: any;
   path: any;
@@ -21,7 +23,24 @@ export class MapComponent implements OnInit {
   allData: any;
   pg: any;
   mapDetails: any;
-  constructor(private el: ElementRef, private topo: TopographyService) { }
+  @Output() citySelectEvt = new EventEmitter<any>();
+  constructor(
+    private _ar: ActivatedRoute,
+    private el: ElementRef,
+    private topo: TopographyService,
+    private _router: Router,
+    private _ds: DataService
+  ) { }
+
+
+  ngAfterViewInit(): void {
+    this._ar.params.subscribe({
+      next: (state: Params) => {
+        this._ds.selectedState = state['id']
+        console.log("stateName", this._ds.selectedState)
+      }
+    })
+  }
   ngOnInit(): void {
     let area = this.mapType.area;
     this.initialMap(area);
@@ -135,8 +154,9 @@ export class MapComponent implements OnInit {
         d3.selectAll('.st')
           .on("mouseover", (e: any) => this.hoverHandle(e))
           .on("mousemove", (e: any) => this.moveHandle(e))
-        // .on("mouseout", (e: any) => this.mouseoutHandle(e))
-        // .on("click", (e: any) => this.doubleClickHandle(e))
+          // .on("mouseout", (e: any) => this.mouseoutHandle(e))
+          // .on("click", (e: any) => this.doubleClickHandle(e))
+          .on("click", (e: any) => this.clickHandle(e))
       }, 1300);
 
 
@@ -156,8 +176,8 @@ export class MapComponent implements OnInit {
         d3.selectAll('.st')
           .on("mouseover", (e: any) => this.hoverHandle(e))
           .on("mousemove", (e: any) => this.moveHandle(e))
-        // .on("mouseout", (e: any) => this.mouseoutHandle(e))
-        // .on("click", (e: any) => this.clickHandle(e))
+          // .on("mouseout", (e: any) => this.mouseoutHandle(e))
+          .on("click", (e: any) => this.clickHandle(e))
       }, 1300);
 
     }
@@ -168,19 +188,20 @@ export class MapComponent implements OnInit {
       '#map'
     ) as HTMLDivElement;
     var map_svg_wt = 0;
-    if (this.pg == 'company') {
-      (this.i) ? map_svg_wt = -40 : map_svg_wt;
-      const width = mapContainerEl.clientWidth + map_svg_wt;
-      const height = (width / 1100) * 550; //800
 
-      return { width, height };
-    } else {
-      (this.i) ? map_svg_wt = 60 : map_svg_wt = -10;
-      const width = mapContainerEl.clientWidth + map_svg_wt;
-      const height = (width / 1150) * 750; //800
+    // if (this.pg == 'company') {
+    //   (this.i) ? map_svg_wt = -40 : map_svg_wt;
+    //   const width = mapContainerEl.clientWidth + map_svg_wt;
+    //   const height = (width / 1100) * 550; //800
+    //   return { width, height };
+    // } else {
 
-      return { width, height };
-    }
+    (this.i) ? map_svg_wt = 60 : map_svg_wt = -10;
+    const width = mapContainerEl.clientWidth + map_svg_wt;
+    const height = (width / 1150) * 450; //800
+
+    return { width, height };
+    //}
 
   };
 
@@ -194,39 +215,56 @@ export class MapComponent implements OnInit {
 
   hoverHandle = (e: any) => {
     d3.selectAll('.st').classed('hvrd', false);
+    d3.select(e.target).classed('hvrd', true);
     this.mapDetails = this.i ? e.target.__data__.properties.name : e.target.__data__.properties.district;
 
-    d3.select("#tips").style('display', 'block');
-    d3.select(e.target).classed('hvrd', true);
+    // d3.select("#tips").style('display', 'block');
+    // d3.select(e.target).classed('hvrd', true);
 
-    d3.selectAll('#tips')
-      .html('<div class="title">' + this.mapDetails + '</div>');
+    // d3.selectAll('#tips')
+    //   .html('<div class="title">' + this.mapDetails + '</div>');
   }
-
 
   moveHandle = (e: any) => {
     var position = d3.pointer(e);
     let th: any = d3.select("#tips").style('height');
     let tips_left = position[0];
     let tips_top = position[1];
-    //------------------
+
     var tips_pos_x = 0;
     var tips_pos_y = 0;
     (this.i) ? tips_pos_x = 75 : tips_pos_x = -10;
-    //--------------
-    // if (tips_top > 170) {
-    //   var tips_pos_y = -80 + position[1];
-    // } else {
+
     var tips_pos_y = 80 + position[1];
-    //}
-    // if (tips_left > 480) {
-    //   var tips_pos_x = 0;
-    //   (this.i) ? tips_pos_x = -200 : tips_pos_x = -220;
-    //   let gh: any = d3.select("#tips").style('width');
-    //   tips_pos_x = tips_pos_x - Math.abs(gh);
-    // }
 
     d3.select("#tips").style('top', ((tips_pos_y)) + "px").style('right', 'auto').style('left', ((tips_left - tips_pos_x)) + "px");
   }
 
+  clickHandle = (e: any) => {
+    this.mapDetails = this.i ? e.target.__data__.properties.name : e.target.__data__.properties.district;
+    d3.select('#area_name_selected').html(this.mapDetails);
+    console.log("this.i", this.i)
+    if (this.i) {
+      let selectedState = this.mapDetails;
+      let stateClickedOrFetched = selectedState ?? this._ds.selectedState;
+      this._router.navigate(['../state/' + stateClickedOrFetched]);
+    }
+    else {
+      console.log("stateName", this._ds.selectedState)
+      this._router.navigate(['../state/' + this._ds.selectedState], { queryParams: { city: this.mapDetails }, skipLocationChange: false, queryParamsHandling: 'merge' });
+      this.citySelectEvt.emit({ state: this._ds.selectedState, city: this.mapDetails })
+    }
+    // this._cs.locateArea(this.mapDetails, 'clickState');
+    // if (this.pg == 'company') {
+    //   this._cs.setReloadCompanyApi('loadCompanyGraphs', this.mapDetails);
+    // } else if (this.pg == "tat") {
+    //   this._cs.setReloadTatApi('loadtatgraphs', this.mapDetails);
+    // }
+    // else if (this.pg == "trend") {
+    //   this._cs.setReloadTrendApi('loadtrendgraphs', this.mapDetails);
+    // } else if (this.pg == 'dashboard') {
+    //   this._cs.setReloadDashboardApi('loadDashboardGraphs', this.mapDetails);
+    //   this._cs.locateArea(this.mapDetails, 'clickState');
+    // }
+  }
 }

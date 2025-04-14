@@ -1,1 +1,5 @@
-<app-map #map [mapType]="mapType" class="geographical-map-container"></app-map>
+<app-map #map [mapType]="mapType" class="geographical-map-container" (citySelectEvt)="citySelectedEvent($event)">
+</app-map>
+<div #dataFormContainer></div>
+<a id="getCropsData_btn" (click)="getCropsData()">Get Crops Data</a>
+<!-- <app-data-form #dataFormTempRef></app-data-form> -->
